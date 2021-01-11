@@ -30,6 +30,16 @@ __VIEWSTATE のパラメータが存在する場合、History の Message Tabに
 
 ![ViewState Tab](/image/ViewState.png)
 
+### ViewStateDecoder タブ
+
+![ViewStateDecoder Tab](/image/ViewStateDecoder.png)
+
+- [Decode] ボタン
+入力したViewState値をデコードします。
+
+- [Clear] ボタン
+デコードした値をクリアします。
+
 ## コマンドラインオプション
 
 コマンドラインから ViewState の値をデコードすることが可能です。

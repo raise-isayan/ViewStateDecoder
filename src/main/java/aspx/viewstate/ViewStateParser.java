@@ -8,6 +8,7 @@ import extend.util.ConvertUtil;
 import extend.util.Util;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -25,6 +26,8 @@ public class ViewStateParser {
     private final static Logger logger = Logger.getLogger(ViewStateParser.class.getName());
 
     private final static boolean DEBUG_MODE = false;
+
+    private Charset encoding =  StandardCharsets.UTF_8;
 
     // Optimized type tokens
     private final static byte Token_Int16 = 0x01;
@@ -414,7 +417,7 @@ if (DEBUG_MODE) System.out.println("Token_BinarySerialized.count:" + count);
                     byte[] array = new byte[count];
                     bbf.get(array);
                     JsonObject jsonNode = new JsonObject();
-                    jsonNode.addProperty("object", new String(array, StandardCharsets.UTF_8));
+                    jsonNode.addProperty("object", new String(array, encoding));
                     decodeNode = jsonNode;
                     break;
                 }
@@ -505,6 +508,10 @@ if (DEBUG_MODE) System.out.println(ex.getMessage() + ":" + Util.getStackTrace(ex
     }
 
     public String readString(ByteBuffer bbf) {
+        return readString(bbf, StandardCharsets.UTF_8);
+    }
+    
+    public String readString(ByteBuffer bbf, Charset charset) {
         StringBuilder sb = new StringBuilder();
         int stringLength = readEncodedInt32(bbf);
         if (stringLength < 0) {
@@ -516,7 +523,7 @@ if (DEBUG_MODE) System.out.println(ex.getMessage() + ":" + Util.getStackTrace(ex
         }
         byte[] byteBuff = new byte[stringLength];
         ByteBuffer b = bbf.get(byteBuff, 0, stringLength);
-        sb.append(new String(byteBuff, 0, stringLength, StandardCharsets.UTF_8));
+        sb.append(new String(byteBuff, 0, stringLength, charset));
         return sb.toString();
     }
 

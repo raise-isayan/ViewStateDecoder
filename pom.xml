@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>burp</groupId>
     <artifactId>ViewStateDecoder</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <packaging>jar</packaging>
     <properties>
         <releaseVersion>${project.version}.0.0</releaseVersion>
@@ -35,9 +35,10 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.0</version>
                 <configuration>
-                    <outputDirectory>${project.basedir}/release</outputDirectory>
+                   <finalName>${project.artifactId}-v${project.version}</finalName>
+                   <outputDirectory>${project.basedir}/release</outputDirectory>
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>

@@ -5,6 +5,7 @@ import aspx.viewstate.OptionProperty;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
+import yagura.view.ViewStateDecoderTab;
 import yagura.view.ViewStateTab;
 
 /**
@@ -25,11 +26,13 @@ public class BurpExtender extends BurpExtenderImpl {
     }
 
     private final ViewStateTab viewStateTab = new ViewStateTab();
+    private final ViewStateDecoderTab viewStateDecoderTab = new ViewStateDecoderTab();
     
     @Override
     public void registerExtenderCallbacks(IBurpExtenderCallbacks callbacks) {
         super.registerExtenderCallbacks(callbacks);
         callbacks.setExtensionName(String.format("%s v%s", BUNDLE.getString("projname"), BUNDLE.getString("version")));
+        callbacks.addSuiteTab(this.viewStateDecoderTab);
         callbacks.registerMessageEditorTabFactory(this.viewStateTab);
     }
 

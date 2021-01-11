@@ -12,7 +12,6 @@ Supports Burp suite Professional/Community.
 This extension is a tool that allows you to display ViewState of ASP.NET.
 Note that it is also possible to decode using the command line.
 
-
 ViewState has been hidden in Burp suite since v2020.3.
 It is intended for use with Burp suite v2020.x or later.
 
@@ -31,6 +30,16 @@ The Burp Suite Extender can be loaded by following the steps below.
 If the __VIEWSTATE parameter exists, you can select the ViewState from the "select extension..." button in the Message Tab of History. button on the Message Tab of the History to select the ViewState.
 
 ![ViewState Tab](/image/ViewState.png)
+
+### ViewStateDecoder Tab
+
+![ViewStateDecoder Tab](/image/ViewStateDecoder.png)
+
+- [Decode] Button
+Decode the ViewState value.
+
+- [Clear] Button
+Clear the decoded value.
 
 ## Command line option
 
