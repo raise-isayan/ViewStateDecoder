@@ -102,6 +102,7 @@ public class ViewStateDecoderTab extends javax.swing.JPanel implements ITab {
     }//GEN-LAST:event_btnDecodeActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        this.txtViewState.setText("");
         this.viewStateTab.clearViewState();        
     }//GEN-LAST:event_btnClearActionPerformed
 

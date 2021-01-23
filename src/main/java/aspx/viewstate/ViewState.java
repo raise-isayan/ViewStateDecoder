@@ -10,12 +10,25 @@ import extend.util.ConvertUtil;
  * @author isayan
  */
 public class ViewState {
-    public static final JsonElement ENCRYPTED_JSON;
+    public static final ViewState ENCRYPTED_VIEW_STATE;
+    public static final ViewState EXCEPTION_VIEW_STATE;
+    public static final ViewState ILL_FORMAT_VIEW_STATE;
 
     static {
+        // Encrypted
         JsonObject encryptedJson = new JsonObject();
         encryptedJson.addProperty("Encrypted", true);
-        ENCRYPTED_JSON = encryptedJson;
+        ENCRYPTED_VIEW_STATE = new ViewState(encryptedJson);
+
+        // Exception
+        JsonObject exceptionJson = new JsonObject();
+        exceptionJson.addProperty("Exception", true);
+        EXCEPTION_VIEW_STATE = new ViewState(exceptionJson);
+
+        // Illegal Format
+        JsonObject illegalFormatJson = new JsonObject();
+        illegalFormatJson.addProperty("Illegal Format", true);
+        ILL_FORMAT_VIEW_STATE = new ViewState(illegalFormatJson);
     }
 
     public static enum Algorithm {

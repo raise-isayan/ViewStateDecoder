@@ -15,9 +15,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -27,6 +25,7 @@ import javax.swing.SwingWorker;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 /**
@@ -134,8 +133,6 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
 
         add(tabViewStateView, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private DefaultTreeModel modelJSON;
     
     @SuppressWarnings("unchecked")
     private void customizeComponents() {
@@ -147,7 +144,6 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
         renderer.setOpenIcon(emptyIcon);
         renderer.setClosedIcon(emptyIcon);
         renderer.setLeafIcon(emptyIcon);
-        this.modelJSON = (DefaultTreeModel) this.treeViewState.getModel();
         this.clearViewState();
     }
     
@@ -257,55 +253,68 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
         }
     }
 
+    private final ViewStateModel ILL_FORMAT_VIEW_STATE_MODEL = new ViewStateModel(ViewState.ILL_FORMAT_VIEW_STATE, "viewState");
+    private final ViewStateModel EXCEPTION_VIEW_STATE_MODEL = new ViewStateModel(ViewState.EXCEPTION_VIEW_STATE, "viewState");
+
     public void setViewState(String viewStateValue) {
         if (viewStateValue == null) {
             return ;
         }
-        if (ViewStateParser.isUrlencoded(viewStateValue)) {
-            viewStateValue = URLDecoder.decode(viewStateValue, StandardCharsets.ISO_8859_1);
-        }
-        final ViewStateParser vs = new ViewStateParser();
-        final String viewStateDecode = viewStateValue;
         try {
+            this.clearViewState();
+            if (ViewStateParser.isUrlencoded(viewStateValue)) {
+                viewStateValue = URLDecoder.decode(viewStateValue, StandardCharsets.ISO_8859_1);
+            }
+            final ViewStateParser vs = new ViewStateParser();
+            final String viewStateDecode = viewStateValue;
             // Tree View
-            SwingWorker swTree = new SwingWorker<ViewStateModel, Object>() {
+            final SwingWorker swTree = new SwingWorker<ViewStateModel, Object>() {
                 @Override
-                protected ViewStateModel doInBackground() throws Exception {
-                    publish("...");
-                    final ViewState viewState = vs.parse(viewStateDecode);
-                    publish("...", "...");
-                    if (viewState.isEncrypted()) {
-                        return new ViewStateModel(viewState, JsonUtil.toJsonTreeModel(ViewState.ENCRYPTED_JSON, "viewState"));
-                    }
-                    else {
-                        String enabled = viewState.isMacEnabled() ? "[MAC enabled]" :  "[MAC disnabled]";
-                        return new ViewStateModel(viewState, (DefaultTreeModel)JsonUtil.toJsonTreeModel(viewState.toJson(), "viewState" + " - " + enabled));
-                    }
+                protected ViewStateModel doInBackground() {
+                    try {
+                        publish("...");
+                        final ViewState viewState = vs.parse(viewStateDecode);
+                        publish("...", "...");
+                        if (viewState.isEncrypted()) {
+                            return EXCEPTION_VIEW_STATE_MODEL;
+                        }
+                        else {
+                            String enabled = viewState.isMacEnabled() ? "[MAC enabled]" :  "[MAC disnabled]";
+                            return new ViewStateModel(viewState, "viewState" + " - " + enabled);
+                        }
+                    } catch (IllegalArgumentException ex) {
+                        Logger.getLogger(ViewStateTab.class.getName()).log(Level.INFO, ex.getMessage(), ex);
+                        return ILL_FORMAT_VIEW_STATE_MODEL;
+                    } catch (Exception ex) {
+                        Logger.getLogger(ViewStateTab.class.getName()).log(Level.WARNING, ex.getMessage(), ex);
+                        return EXCEPTION_VIEW_STATE_MODEL;
+                    }                    
                 }
 
                 protected void process(List<Object> chunks) {
-                    modelJSON.setRoot(new DefaultMutableTreeNode("Heavy Processing" + ConvertUtil.repeat("...", chunks.size())));
+                    treeViewState.setModel(JsonUtil.toTreeNodeModel("Heavy Processing" + ConvertUtil.repeat("...", chunks.size())));
                 }
 
                 protected void done() {
                     try {
-                        final ViewStateModel vs = get();
-                        modelJSON = vs.getViewStateModel();
-                        SwingUtil.allNodesChanged(treeViewState);
-                        treeViewState.setModel(modelJSON);
-                        expandJsonTree();
-                        txtJSON.setText(JsonUtil.prettyJson(vs.getViewState().toJson(), true));
-                        txtJSON.setCaretPosition(0);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(ViewStateTab.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ExecutionException ex) {
-                        Logger.getLogger(ViewStateTab.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                        final ViewStateModel vsm = get();
+                        setViewStateModel(vsm);
+                    } catch (IllegalArgumentException ex) {
+                        Logger.getLogger(ViewStateTab.class.getName()).log(Level.INFO, ex.getMessage(), ex);
+                        setViewStateModel(ILL_FORMAT_VIEW_STATE_MODEL);
+                    } catch (Exception ex) {
+                        Logger.getLogger(ViewStateTab.class.getName()).log(Level.WARNING, ex.getMessage(), ex);
+                        setViewStateModel(EXCEPTION_VIEW_STATE_MODEL);
+                    }                    
                 }
             };
             swTree.execute();
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(ViewStateTab.class.getName()).log(Level.WARNING, null, ex);
+            setViewStateModel(ILL_FORMAT_VIEW_STATE_MODEL);
+            Logger.getLogger(ViewStateTab.class.getName()).log(Level.INFO, ex.getMessage(), ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ViewStateTab.class.getName()).log(Level.WARNING, ex.getMessage(), ex);
+            setViewStateModel(EXCEPTION_VIEW_STATE_MODEL);
         }
     }
 
@@ -314,6 +323,15 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
         this.txtJSON.setText("");
     }
 
+    private void setViewStateModel(ViewStateModel vsm) {
+        DefaultTreeModel modelJSON = vsm.getViewStateModel();
+        this.treeViewState.setModel(modelJSON);
+        SwingUtil.allNodesChanged(this.treeViewState);
+        expandJsonTree();
+        this.txtJSON.setText(JsonUtil.prettyJson(vsm.getViewState().toJson(), true));
+        this.txtJSON.setCaretPosition(0);
+    }
+       
     @Override
     public boolean isModified() {
         return false;
@@ -344,7 +362,8 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
     public void expandJsonTree() {
         TreePath selectionPath = this.treeViewState.getSelectionPath();
         if (selectionPath == null) {
-            DefaultMutableTreeNode root = (DefaultMutableTreeNode) this.modelJSON.getRoot();
+            TreeModel model = this.treeViewState.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
             selectionPath = new TreePath(root.getPath());
         }
         SwingUtil.expandAll(this.treeViewState, selectionPath);
@@ -353,7 +372,8 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
     public void collapseJsonTree() {
         TreePath selectionPath = this.treeViewState.getSelectionPath();
         if (selectionPath == null) {
-            DefaultMutableTreeNode root = (DefaultMutableTreeNode) this.modelJSON.getRoot();
+            TreeModel model = this.treeViewState.getModel();
+            DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
             selectionPath = new TreePath(root.getPath());
         }
         SwingUtil.collapseAll(this.treeViewState, selectionPath);
@@ -364,9 +384,9 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
         private final ViewState viewState;
         private final DefaultTreeModel model;
         
-        public ViewStateModel(ViewState viewState, DefaultTreeModel model) {
+        public ViewStateModel(ViewState viewState, String rootName) {
             this.viewState = viewState;
-            this.model = model;
+            this.model = (DefaultTreeModel)JsonUtil.toJsonTreeModel(viewState.toJson(), rootName);
         }
         
         public ViewState getViewState() {
