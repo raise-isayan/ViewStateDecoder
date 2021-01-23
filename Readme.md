@@ -29,7 +29,11 @@ The Burp Suite Extender can be loaded by following the steps below.
 
 If the __VIEWSTATE parameter exists, you can select the ViewState from the "select extension..." button in the Message Tab of History. button on the Message Tab of the History to select the ViewState.
 
-![ViewState Tab](/image/ViewState.png)
+![ViewState-Tree Tab](/image/ViewState-Tree.png)
+
+Switch tabs to view Raw JSON.
+
+![ViewState-JSON Tab](/image/ViewState-JSON.png)
 
 ### ViewStateDecoder Tab
 

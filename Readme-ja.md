@@ -28,7 +28,11 @@ Burp suite の Extenderは以下の手順で読み込めます。
 
 __VIEWSTATE のパラメータが存在する場合、History の Message Tabにおいて、「select extension...」ボタンから ViewState を選択できるようになります。
 
-![ViewState Tab](/image/ViewState.png)
+![ViewState-Tree Tab](/image/ViewState-Tree.png)
+
+タブを切り替えてRAW JSONを表示することができます。
+
+![ViewState-JSON Tab](/image/ViewState-JSON.png)
 
 ### ViewStateDecoder タブ
 

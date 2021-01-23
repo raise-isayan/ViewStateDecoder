@@ -1,6 +1,7 @@
 package yagura.view;
 
 import burp.ITab;
+import java.awt.BorderLayout;
 import java.awt.Component;
 
 /**
@@ -31,11 +32,12 @@ public class ViewStateDecoderTab extends javax.swing.JPanel implements ITab {
         txtViewState = new javax.swing.JTextArea();
         btnDecode = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        tabViewStateDecoder = new javax.swing.JTabbedPane();
+        pnlViewStateTab = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
         txtViewState.setColumns(20);
+        txtViewState.setLineWrap(true);
         txtViewState.setRows(5);
         jScrollPane1.setViewportView(txtViewState);
 
@@ -71,16 +73,19 @@ public class ViewStateDecoderTab extends javax.swing.JPanel implements ITab {
             .addGroup(pnlViewStateDecoderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlViewStateDecoderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(pnlViewStateDecoderLayout.createSequentialGroup()
                         .addComponent(btnDecode)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnClear))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnClear)
+                        .addGap(0, 71, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         add(pnlViewStateDecoder, java.awt.BorderLayout.NORTH);
-        add(tabViewStateDecoder, java.awt.BorderLayout.CENTER);
+
+        pnlViewStateTab.setLayout(new java.awt.BorderLayout());
+        add(pnlViewStateTab, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     public String getViewStateValue() {
@@ -106,15 +111,15 @@ public class ViewStateDecoderTab extends javax.swing.JPanel implements ITab {
     private javax.swing.JButton btnDecode;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlViewStateDecoder;
-    private javax.swing.JTabbedPane tabViewStateDecoder;
+    private javax.swing.JPanel pnlViewStateTab;
     private javax.swing.JTextArea txtViewState;
     // End of variables declaration//GEN-END:variables
-
     
-    private ViewStateTab viewStateTab = new ViewStateTab();
+    private final ViewStateTab viewStateTab = new ViewStateTab();
     
     private void customizeComponents() {
-        this.tabViewStateDecoder.addTab(viewStateTab.getTabCaption(), viewStateTab);
+        this.txtViewState.setWrapStyleWord(false);
+        this.pnlViewStateTab.add(this.viewStateTab, BorderLayout.CENTER);
     }
 
     @Override

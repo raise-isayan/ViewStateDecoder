@@ -12,12 +12,16 @@ import extend.util.ConvertUtil;
 import extend.util.SwingUtil;
 import extend.util.external.JsonUtil;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.SwingWorker;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -49,24 +53,57 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlTree = new javax.swing.JPanel();
-        scrollTree = new javax.swing.JScrollPane();
-        treeJSON = new javax.swing.JTree();
-        jPanel1 = new javax.swing.JPanel();
+        popMenu = new javax.swing.JPopupMenu();
+        popCopyMenu = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        popExpandMenu = new javax.swing.JMenuItem();
+        popCollapseMenu = new javax.swing.JMenuItem();
+        tabViewStateView = new javax.swing.JTabbedPane();
+        pnlViewState = new javax.swing.JPanel();
+        scrollViewState = new javax.swing.JScrollPane();
+        treeViewState = new javax.swing.JTree();
+        pnlHeader = new javax.swing.JPanel();
         btnExpand = new javax.swing.JButton();
         btnCollapse = new javax.swing.JButton();
+        scrollJSON = new javax.swing.JScrollPane();
+        txtJSON = new javax.swing.JTextArea();
+
+        popCopyMenu.setText("Copy");
+        popCopyMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popCopyMenuActionPerformed(evt);
+            }
+        });
+        popMenu.add(popCopyMenu);
+        popMenu.add(jSeparator1);
+
+        popExpandMenu.setText("expand");
+        popExpandMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popExpandMenuActionPerformed(evt);
+            }
+        });
+        popMenu.add(popExpandMenu);
+
+        popCollapseMenu.setText("collapse");
+        popCollapseMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popCollapseMenuActionPerformed(evt);
+            }
+        });
+        popMenu.add(popCollapseMenu);
 
         setLayout(new java.awt.BorderLayout());
 
-        pnlTree.setLayout(new java.awt.BorderLayout());
+        pnlViewState.setLayout(new java.awt.BorderLayout());
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        treeJSON.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        scrollTree.setViewportView(treeJSON);
+        treeViewState.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        scrollViewState.setViewportView(treeViewState);
 
-        pnlTree.add(scrollTree, java.awt.BorderLayout.CENTER);
+        pnlViewState.add(scrollViewState, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        pnlHeader.setLayout(new javax.swing.BoxLayout(pnlHeader, javax.swing.BoxLayout.LINE_AXIS));
 
         btnExpand.setText("expand");
         btnExpand.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +111,7 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
                 btnExpandActionPerformed(evt);
             }
         });
-        jPanel1.add(btnExpand);
+        pnlHeader.add(btnExpand);
 
         btnCollapse.setText("collapse");
         btnCollapse.addActionListener(new java.awt.event.ActionListener() {
@@ -82,33 +119,68 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
                 btnCollapseActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCollapse);
+        pnlHeader.add(btnCollapse);
 
-        pnlTree.add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        pnlViewState.add(pnlHeader, java.awt.BorderLayout.PAGE_START);
 
-        add(pnlTree, java.awt.BorderLayout.CENTER);
+        tabViewStateView.addTab("ViewState", pnlViewState);
+
+        txtJSON.setEditable(false);
+        txtJSON.setColumns(20);
+        txtJSON.setRows(5);
+        scrollJSON.setViewportView(txtJSON);
+
+        tabViewStateView.addTab("Raw JSON", scrollJSON);
+
+        add(tabViewStateView, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private DefaultTreeModel modelJSON;
     
     @SuppressWarnings("unchecked")
     private void customizeComponents() {
+        //this.txtJSON.setComponentPopupMenu(this.popMenu);
+        this.treeViewState.setComponentPopupMenu(this.popMenu);
+        this.treeViewState.getActionMap().put("copy", copyAction);
         Icon emptyIcon = SwingUtil.createEmptyIcon();
-        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) this.treeJSON.getCellRenderer();
+        DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer) this.treeViewState.getCellRenderer();
         renderer.setOpenIcon(emptyIcon);
         renderer.setClosedIcon(emptyIcon);
         renderer.setLeafIcon(emptyIcon);
-        this.modelJSON = (DefaultTreeModel) this.treeJSON.getModel();
+        this.modelJSON = (DefaultTreeModel) this.treeViewState.getModel();
         this.clearViewState();
     }
     
+    private final Action copyAction = new AbstractAction() {
+        public void actionPerformed(ActionEvent evt) {
+            TreePath selectionPath = treeViewState.getSelectionPath();
+            if (selectionPath != null) {
+                Object[] paths = selectionPath.getPath();
+                Object x = paths[paths.length - 1];
+                SwingUtil.systemClipboardCopy(x.toString());                        
+            }
+        }
+    };
+        
     private void btnExpandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpandActionPerformed
-        expandJsonTree();
+        this.expandJsonTree();
     }//GEN-LAST:event_btnExpandActionPerformed
 
     private void btnCollapseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollapseActionPerformed
-        collapseJsonTree();
+        this.collapseJsonTree();
     }//GEN-LAST:event_btnCollapseActionPerformed
+
+    private void popCopyMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popCopyMenuActionPerformed
+        this.copyAction.actionPerformed(evt);
+    }//GEN-LAST:event_popCopyMenuActionPerformed
+
+    private void popExpandMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popExpandMenuActionPerformed
+        this.expandJsonTree();
+    }//GEN-LAST:event_popExpandMenuActionPerformed
+
+    private void popCollapseMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popCollapseMenuActionPerformed
+        this.collapseJsonTree();
+    }//GEN-LAST:event_popCollapseMenuActionPerformed
 
     @Override
     public IMessageEditorTab createNewInstance(IMessageEditorController controller, boolean editable) {
@@ -134,6 +206,15 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
         if (content == null || content.length == 0) {
             return false;
         }
+//        UniversalViewProperty viewProperty = BurpExtender.getInstance().getProperty().getEncodingProperty();	
+//        EnumSet<UniversalViewProperty.UniversalView> view = viewProperty.getMessageView();	
+//        if (!view.contains(UniversalViewProperty.UniversalView.VIEW_STATE)) {	
+//            return false;	
+//        }	
+//        // パラメータ値のサイズではなく全体のサイズで判断する	
+//        if ( content.length > viewProperty.getDispayMaxLength() && viewProperty.getDispayMaxLength() != 0) {	
+//            return false;	
+//        }
         IRequestInfo reqInfo = BurpExtender.getHelpers().analyzeRequest(content);
         List<IParameter> parameters = reqInfo.getParameters();
         for (IParameter p : parameters) {
@@ -187,18 +268,18 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
         final String viewStateDecode = viewStateValue;
         try {
             // Tree View
-            SwingWorker swTree = new SwingWorker<DefaultTreeModel, Object>() {
+            SwingWorker swTree = new SwingWorker<ViewStateModel, Object>() {
                 @Override
-                protected DefaultTreeModel doInBackground() throws Exception {
+                protected ViewStateModel doInBackground() throws Exception {
                     publish("...");
                     final ViewState viewState = vs.parse(viewStateDecode);
                     publish("...", "...");
                     if (viewState.isEncrypted()) {
-                        return JsonUtil.toJsonTreeModel(ViewState.ENCRYPTED_JSON, "viewState");
+                        return new ViewStateModel(viewState, JsonUtil.toJsonTreeModel(ViewState.ENCRYPTED_JSON, "viewState"));
                     }
                     else {
                         String enabled = viewState.isMacEnabled() ? "[MAC enabled]" :  "[MAC disnabled]";
-                        return (DefaultTreeModel)JsonUtil.toJsonTreeModel(viewState.toJson(), "viewState" + " - " + enabled);
+                        return new ViewStateModel(viewState, (DefaultTreeModel)JsonUtil.toJsonTreeModel(viewState.toJson(), "viewState" + " - " + enabled));
                     }
                 }
 
@@ -208,10 +289,13 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
 
                 protected void done() {
                     try {
-                        modelJSON = get();
-                        SwingUtil.allNodesChanged(treeJSON);
-                        treeJSON.setModel(modelJSON);
+                        final ViewStateModel vs = get();
+                        modelJSON = vs.getViewStateModel();
+                        SwingUtil.allNodesChanged(treeViewState);
+                        treeViewState.setModel(modelJSON);
                         expandJsonTree();
+                        txtJSON.setText(JsonUtil.prettyJson(vs.getViewState().toJson(), true));
+                        txtJSON.setCaretPosition(0);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ViewStateTab.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (ExecutionException ex) {
@@ -226,7 +310,8 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
     }
 
     public void clearViewState() {
-        this.treeJSON.setModel(JsonUtil.toTreeNodeModel("viewState"));
+        this.treeViewState.setModel(JsonUtil.toTreeNodeModel("viewState"));
+        this.txtJSON.setText("");
     }
 
     @Override
@@ -242,28 +327,56 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCollapse;
     private javax.swing.JButton btnExpand;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel pnlTree;
-    private javax.swing.JScrollPane scrollTree;
-    private javax.swing.JTree treeJSON;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPanel pnlHeader;
+    private javax.swing.JPanel pnlViewState;
+    private javax.swing.JMenuItem popCollapseMenu;
+    private javax.swing.JMenuItem popCopyMenu;
+    private javax.swing.JMenuItem popExpandMenu;
+    private javax.swing.JPopupMenu popMenu;
+    private javax.swing.JScrollPane scrollJSON;
+    private javax.swing.JScrollPane scrollViewState;
+    private javax.swing.JTabbedPane tabViewStateView;
+    private javax.swing.JTree treeViewState;
+    private javax.swing.JTextArea txtJSON;
     // End of variables declaration//GEN-END:variables
 
     public void expandJsonTree() {
-        TreePath path = this.treeJSON.getSelectionPath();
-        if (path == null) {
+        TreePath selectionPath = this.treeViewState.getSelectionPath();
+        if (selectionPath == null) {
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) this.modelJSON.getRoot();
-            path = new TreePath(root.getPath());
+            selectionPath = new TreePath(root.getPath());
         }
-        SwingUtil.expandAll(this.treeJSON, path);
+        SwingUtil.expandAll(this.treeViewState, selectionPath);
     }
 
     public void collapseJsonTree() {
-        TreePath path = this.treeJSON.getSelectionPath();
-        if (path == null) {
+        TreePath selectionPath = this.treeViewState.getSelectionPath();
+        if (selectionPath == null) {
             DefaultMutableTreeNode root = (DefaultMutableTreeNode) this.modelJSON.getRoot();
-            path = new TreePath(root.getPath());
+            selectionPath = new TreePath(root.getPath());
         }
-        SwingUtil.collapseAll(this.treeJSON, path);
+        SwingUtil.collapseAll(this.treeViewState, selectionPath);
     }
+    
+    private static class ViewStateModel {
+    
+        private final ViewState viewState;
+        private final DefaultTreeModel model;
+        
+        public ViewStateModel(ViewState viewState, DefaultTreeModel model) {
+            this.viewState = viewState;
+            this.model = model;
+        }
+        
+        public ViewState getViewState() {
+            return viewState;
+        }
 
+        public DefaultTreeModel getViewStateModel() {
+            return model;
+        }
+        
+    }
+    
 }
