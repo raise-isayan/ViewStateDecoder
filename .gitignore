@@ -1,4 +1,3 @@
-/target
+/.gradle
+/build
 *.zip
-*.md5
-*.sha1

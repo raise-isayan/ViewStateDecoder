@@ -38,6 +38,12 @@ __VIEWSTATE のパラメータが存在する場合、History の Message Tabに
 
 ![ViewStateDecoder Tab](/image/ViewStateDecoder.png)
 
+- [expand] ボタン::
+    選択したツリーを展開します。
+
+- [collapse] ボタン::
+    選択したツリーを折りたたみます。
+
 - [Decode] ボタン
 入力したViewState値をデコードします。
 
@@ -81,6 +87,12 @@ ViewState が URLEncode されている場合でも URLDecode 後に ViewState �
 java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEuOq7AGUDk%3D
 ```
 
+## ビルド
+
+```
+gradlew build
+```
+
 ## 実行環境
 
 .Java
@@ -91,14 +103,16 @@ java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEu
 
 ## 開発環境
 * NetBean 12.2 (https://netbeans.apache.org/)
-* Meven 3.6.1 (https://maven.apache.org/)
+* Gradle 6.8.1 (https://gradle.org/)
 
 ## 必須ライブラリ
 ビルドには別途 [BurpExtLib](https://github.com/raise-isayan/BurpExtLib) のライブラリを必要とします。
 * BurpExtlib v2.1.0
   * https://github.com/raise-isayan/BurpExtLib
-* google gson
-  * https://github.com/google/gson
+
+## 利用ライブラリ
+
+* google gson (https://github.com/google/gson)
   * Apache License 2.0
   * https://github.com/google/gson/blob/master/LICENSE
 

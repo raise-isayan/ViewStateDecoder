@@ -39,6 +39,12 @@ Switch tabs to view Raw JSON.
 
 ![ViewStateDecoder Tab](/image/ViewStateDecoder.png)
 
+- [expand] Button::
+    Expand the selected tree.
+
+- [collapse] Button::
+    Collapse the selected tree.
+
 - [Decode] Button
 Decode the ViewState value.
 
@@ -83,6 +89,12 @@ example)
 java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEuOq7AGUDk%3D
 ```
 
+## build
+
+```
+gradlew build
+```
+
 ## Runtime environment
 
 .Java
@@ -93,14 +105,15 @@ java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEu
 
 ## Development environment
 * NetBean 12.2 (https://netbeans.apache.org/)
-* Meven 3.6.1 (https://maven.apache.org/)
+* Gradle 6.8.1 (https://gradle.org/)
 
 ## Required libraries
+Build requires a separate library of [BurpExtLib](https://github.com/raise-isayan/BurpExtLib).
+* BurpExtlib v2.1.2.0
 
-* BurpExtlib v2.1.0
-  * https://github.com/raise-isayan/BurpExtLib
-* google gson
-  * https://github.com/google/gson
+## Use Library
+
+* google gson (https://github.com/google/gson)
   * Apache License 2.0
   * https://github.com/google/gson/blob/master/LICENSE
 
