@@ -39,17 +39,17 @@ Switch tabs to view Raw JSON.
 
 ![ViewStateDecoder Tab](/image/ViewStateDecoder.png)
 
-- [expand] Button::
+- [expand] Button
     Expand the selected tree.
 
-- [collapse] Button::
+- [collapse] Button
     Collapse the selected tree.
 
 - [Decode] Button
-Decode the ViewState value.
+    Decode the ViewState value.
 
 - [Clear] Button
-Clear the decoded value.
+    Clear the decoded value.
 
 ## Command line option
 
@@ -92,7 +92,7 @@ java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEu
 ## build
 
 ```
-gradlew build
+gradlew release
 ```
 
 ## Runtime environment
@@ -108,8 +108,9 @@ gradlew build
 * Gradle 6.8.1 (https://gradle.org/)
 
 ## Required libraries
-Build requires a separate library of [BurpExtLib](https://github.com/raise-isayan/BurpExtLib).
-* BurpExtlib v2.1.2.0
+Building requires a [BurpExtensionCommons](https://github.com/raise-isayan/BurpExtensionCommons) library.
+* BurpExtensionCommons v0.4.0.0
+  * https://github.com/raise-isayan/BurpExtensionCommons
 
 ## Use Library
 

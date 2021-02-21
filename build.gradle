@@ -16,16 +16,24 @@ tasks.withType(JavaCompile) {
 }
 
 processResources {
+    filteringCharset = 'UTF-8'
     filesMatching ('**/*.properties') {
        expand(project.properties)
+       // naitive2ascii
+       filter(org.apache.tools.ant.filters.EscapeUnicode)
     }
 }
 
 clean.doFirst { 
-    delete 'release';
+    delete fileTree('release') {
+      include '*.jar'
+    }
 }
 
 jar {
+    // Keep jar clean:
+    exclude 'META-INF/**', 'about.html', 'module-info.class'
+
     manifest {
         attributes 'Main-Class': mainClassName
     }
@@ -34,8 +42,8 @@ jar {
         configurations.runtimeClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
     }
 
-    destinationDir = file('release')
-    version =  "v${release_version_major}"
+    destinationDirectory = file('release')
+    archiveVersion =  "v${release_version_major}"
 }
 
 task release(type: Zip, dependsOn: ['build']) {
@@ -55,15 +63,17 @@ task release(type: Zip, dependsOn: ['build']) {
 }
 
 dependencies {
-    // https://github.com/raise-isayan/BurpExtlib
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // https://mvnrepository.com/artifact/net.portswigger.burp.extender/burp-extender-api
     compileOnly 'net.portswigger.burp.extender:burp-extender-api:2.1'
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation 'com.google.code.gson:gson:2.8.6'
+    // https://github.com/raise-isayan/BurpExtlib
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+        // https://mvnrepository.com/artifact/com.google.code.gson/gson
+        implementation 'com.google.code.gson:gson:2.8.6'
+        // https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet
+        implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
+
     // UnitTest
     // https://mvnrepository.com/artifact/net.portswigger.burp.extender/burp-extender-api
     testImplementation 'net.portswigger.burp.extender:burp-extender-api:2.1'
-    testImplementation     'junit:junit:4.13'
-
+    testImplementation 'junit:junit:4.13.1'
 }

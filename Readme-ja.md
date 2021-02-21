@@ -38,17 +38,17 @@ __VIEWSTATE のパラメータが存在する場合、History の Message Tabに
 
 ![ViewStateDecoder Tab](/image/ViewStateDecoder.png)
 
-- [expand] ボタン::
+- [expand] ボタン
     選択したツリーを展開します。
 
-- [collapse] ボタン::
+- [collapse] ボタン
     選択したツリーを折りたたみます。
 
 - [Decode] ボタン
-入力したViewState値をデコードします。
+    入力したViewState値をデコードします。
 
 - [Clear] ボタン
-デコードした値をクリアします。
+    デコードした値をクリアします。
 
 ## コマンドラインオプション
 
@@ -90,7 +90,7 @@ java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEu
 ## ビルド
 
 ```
-gradlew build
+gradlew release
 ```
 
 ## 実行環境
@@ -106,9 +106,9 @@ gradlew build
 * Gradle 6.8.1 (https://gradle.org/)
 
 ## 必須ライブラリ
-ビルドには別途 [BurpExtLib](https://github.com/raise-isayan/BurpExtLib) のライブラリを必要とします。
-* BurpExtlib v2.1.0
-  * https://github.com/raise-isayan/BurpExtLib
+ビルドには別途 [BurpExtensionCommons](https://github.com/raise-isayan/BurpExtensionCommons) のライブラリを必要とします。
+* BurpExtensionCommons v0.4.0.0
+  * https://github.com/raise-isayan/BurpExtensionCommons
 
 ## 利用ライブラリ
 

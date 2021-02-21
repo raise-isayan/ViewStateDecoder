@@ -1,6 +1,6 @@
 package aspx.viewstate;
 
-import extend.util.external.JsonUtil;
+import extension.helpers.json.JsonUtil;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -12,14 +12,14 @@ import java.util.logging.Logger;
  * @author isayan
  */
 public class ViewStateDecoder {
-   private final static Logger logger = Logger.getLogger(ViewStateDecoder.class.getName());
+    private final static Logger logger = Logger.getLogger(ViewStateDecoder.class.getName());
 
     private final static java.util.ResourceBundle RELEASE = java.util.ResourceBundle.getBundle("burp/resources/release");
 
     private static String getVersion() {
-        return RELEASE.getString("version");
+       return RELEASE.getString("version");
     }
-        
+
     /**
      * @param args the command line arguments
      */
@@ -50,7 +50,7 @@ public class ViewStateDecoder {
                     // multi parameter
                     if ("-vs".equals(param[0])) {
                         viewStateValue = param[1];
-                    }                
+                    }       
                 }
             }
 
@@ -62,23 +62,22 @@ public class ViewStateDecoder {
             }
             else {
                 if (ViewStateParser.isUrlencoded(viewStateValue)) {
-                    viewStateValue = URLDecoder.decode(viewStateValue, StandardCharsets.ISO_8859_1);      
+                    viewStateValue = URLDecoder.decode(viewStateValue, StandardCharsets.ISO_8859_1);
                 }
                 ViewStateParser vs = new ViewStateParser();
-                final ViewState viewState = vs.parse(viewStateValue);                            
+                final ViewState viewState = vs.parse(viewStateValue);
                 if (viewState.isEncrypted()) {
-                    System.out.println("probably encrypted");                    
+                    System.out.println("probably encrypted");
                 }
                 else {
                     if (viewState.isMacEnabled()) {
                         System.out.println("MAC: " + viewState.isMacEnabled());
-                        System.out.println("digest: " + viewState.getDigest());                
-                    } 
-                    System.out.println(JsonUtil.prettyJson(viewState.toJson(), true));                
+                        System.out.println("digest: " + viewState.getDigest());
+                    }
+                    System.out.println(JsonUtil.prettyJson(viewState.toJson(), true));
                 }
-                return;            
+                return;
             }
-                                
         } catch (Exception ex) {
             String errmsg = String.format("%s: %s", ex.getClass().getName(), ex.getMessage());
             System.out.println(errmsg);
@@ -98,5 +97,5 @@ public class ViewStateDecoder {
         System.out.println("\t=-vs: viewstate string");
         System.out.println("");
     }
-    
+ 
 }

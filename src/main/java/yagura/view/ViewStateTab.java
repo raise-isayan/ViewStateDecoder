@@ -8,13 +8,15 @@ import burp.IMessageEditorTab;
 import burp.IMessageEditorTabFactory;
 import burp.IParameter;
 import burp.IRequestInfo;
-import extend.util.ConvertUtil;
-import extend.util.SwingUtil;
-import extend.util.external.JsonUtil;
+import extension.helpers.ConvertUtil;
+import extension.helpers.StringUtil;
+import extension.helpers.SwingUtil;
+import extension.helpers.json.JsonUtil;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +29,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+//import yagura.model.UniversalViewProperty;
 
 /**
  *
@@ -292,7 +295,7 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
                 }
 
                 protected void process(List<Object> chunks) {
-                    treeViewState.setModel(JsonUtil.toTreeNodeModel("Heavy Processing" + ConvertUtil.repeat("...", chunks.size())));
+                    treeViewState.setModel(JsonUtil.toTreeNodeModel("Heavy Processing" + StringUtil.repeat("...", chunks.size())));
                 }
 
                 protected void done() {

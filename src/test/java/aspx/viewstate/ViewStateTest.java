@@ -1,7 +1,7 @@
 package aspx.viewstate;
 
-import extend.util.Util;
-import extend.util.external.JsonUtil;
+import extension.helpers.StringUtil;
+import extension.helpers.json.JsonUtil;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.junit.After;
@@ -117,7 +117,7 @@ public class ViewStateTest {
                 System.out.println(JsonUtil.prettyJson(result.toJson(), true));                    
                 fail();
             } catch (IllegalArgumentException ex) {
-                System.out.println(Util.getStackTrace(ex));
+                System.out.println(StringUtil.getStackTrace(ex));
             }
         }
         

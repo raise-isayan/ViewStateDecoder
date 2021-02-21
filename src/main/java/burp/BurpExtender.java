@@ -2,6 +2,7 @@ package burp;
 
 import aspx.viewstate.IOptionProperty;
 import aspx.viewstate.OptionProperty;
+import extension.burp.BurpExtenderImpl;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
@@ -13,7 +14,7 @@ import yagura.view.ViewStateTab;
  * @author isayan
  */
 public class BurpExtender extends BurpExtenderImpl {
-   private final static Logger logger = Logger.getLogger(BurpExtender.class.getName());
+    private final static Logger logger = Logger.getLogger(BurpExtender.class.getName());
  
     public BurpExtender() {
     }

@@ -4,8 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
-import extend.util.ConvertUtil;
-import extend.util.Util;
+import extension.helpers.ConvertUtil;
+import extension.helpers.StringUtil;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
@@ -356,8 +356,6 @@ if (DEBUG_MODE) System.out.println("Token_Unit");
                     int b = bbf.remaining();
                     double value = bbf.getDouble();
                     int type = bbf.getInt();
-//                    jsonUnit.addProperty("UnitType", type);
-//                    jsonUnit.addProperty("Value", value);
                     JsonObject jsonNode = new JsonObject();
                     jsonNode.addProperty("Unit", String.format("%.2f %s", value, ViewState.getUnitType(type)));
                     decodeNode = jsonNode;
@@ -490,7 +488,7 @@ if (DEBUG_MODE) System.out.println("Mismatch token:" + String.format("0x%02x len
             }
             return decodeNode;
         } catch (RuntimeException ex) {
-if (DEBUG_MODE) System.out.println(ex.getMessage() + ":" + Util.getStackTrace(ex));
+if (DEBUG_MODE) System.out.println(ex.getMessage() + ":" + StringUtil.getStackTrace(ex));
         }
         return decodeNode;
     }
@@ -510,7 +508,7 @@ if (DEBUG_MODE) System.out.println(ex.getMessage() + ":" + Util.getStackTrace(ex
     public String readString(ByteBuffer bbf) {
         return readString(bbf, StandardCharsets.UTF_8);
     }
-    
+
     public String readString(ByteBuffer bbf, Charset charset) {
         StringBuilder sb = new StringBuilder();
         int stringLength = readEncodedInt32(bbf);
