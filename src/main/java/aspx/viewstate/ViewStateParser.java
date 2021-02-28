@@ -17,9 +17,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author isayan
  * Base Code
- * @see https://github.com/mono/mono/blob/da11592cbea4269971f4b1f9624769a85cc10660/mcs/class/referencesource/System.Web/UI/ObjectStateFormatter.cs
+ * @see https://github.com/mono/mono/blob/master/mcs/class/referencesource/System.Web/UI/ObjectStateFormatter.cs
  * @licenses MIT license
  */
 public class ViewStateParser {

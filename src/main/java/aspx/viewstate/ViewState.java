@@ -99,13 +99,13 @@ public class ViewState {
     public Algorithm getMacAlgorithm() {
         Algorithm algorithm = Algorithm.HMAC_UNKNOWN;
         switch (digest.length) {
-            case 0x20:
+            case 20:
                 algorithm = Algorithm.HMAC_SHA256;
                 break;
-            case 0x30:
+            case 30:
                 algorithm = Algorithm.HMAC_SHA384;
                 break;
-            case 0x40:
+            case 40:
                 algorithm = Algorithm.HMAC_SHA512;
                 break;
         }
