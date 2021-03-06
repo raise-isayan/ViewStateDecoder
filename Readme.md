@@ -89,6 +89,12 @@ example)
 java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEuOq7AGUDk%3D
 ```
 
+You can also launch it standalone with the -gui option, which does not require Burp sute.
+
+```
+java -jar ViewStateDecoder.jar -gui
+```
+
 ## build
 
 ```
@@ -109,7 +115,7 @@ gradlew release
 
 ## Required libraries
 Building requires a [BurpExtensionCommons](https://github.com/raise-isayan/BurpExtensionCommons) library.
-* BurpExtensionCommons v0.4.0.0
+* BurpExtensionCommons v0.4.x
   * https://github.com/raise-isayan/BurpExtensionCommons
 
 ## Use Library

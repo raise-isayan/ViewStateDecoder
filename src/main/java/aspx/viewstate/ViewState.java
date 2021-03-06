@@ -93,7 +93,7 @@ public class ViewState {
     }
 
     public boolean isMacEnabled() {
-        return this.digest.length > 0;
+        return this.digest.length > 0 && (getMacAlgorithm() != Algorithm.HMAC_UNKNOWN);
     }
 
     public Algorithm getMacAlgorithm() {

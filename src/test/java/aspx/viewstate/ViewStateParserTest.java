@@ -134,7 +134,7 @@ public class ViewStateParserTest {
             System.out.println(JsonUtil.prettyJson(vs.toJson(), true));
             System.out.println("Digest:" + vs.getDigest());
             assertEquals(Algorithm.HMAC_UNKNOWN, vs.getMacAlgorithm());
-//            assertEquals(false, vs.isMacEnabled());
+            assertEquals(false, vs.isMacEnabled());
         }
 
         System.out.println("Parser20");

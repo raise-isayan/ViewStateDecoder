@@ -6,10 +6,11 @@ repositories {
     jcenter()
 }
 
-sourceCompatibility = '1.8' // -source
-targetCompatibility = '1.8' // -target
+sourceCompatibility = '11' // -source
+targetCompatibility = '11' // -target
 
 mainClassName = 'aspx.viewstate.ViewStateDecoder'
+//mainClassName = 'yagura.view.ViewStateMainFrame'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -64,7 +65,9 @@ task release(type: Zip, dependsOn: ['build']) {
 
 dependencies {
     // https://mvnrepository.com/artifact/net.portswigger.burp.extender/burp-extender-api
-    compileOnly 'net.portswigger.burp.extender:burp-extender-api:2.1'
+//    stand alone mode で実行させるため含める
+//    compileOnly 'net.portswigger.burp.extender:burp-extender-api:2.1'
+    implementation 'net.portswigger.burp.extender:burp-extender-api:2.1'
     // https://github.com/raise-isayan/BurpExtlib
     implementation fileTree(dir: 'libs', include: ['*.jar'])
         // https://mvnrepository.com/artifact/com.google.code.gson/gson

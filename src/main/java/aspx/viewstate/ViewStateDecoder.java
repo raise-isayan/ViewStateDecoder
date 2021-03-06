@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static yagura.view.ViewStateMainFrame.mainGUI;
 
 /**
  *
@@ -23,10 +24,13 @@ public class ViewStateDecoder {
     /**
      * @param args the command line arguments
      */
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
+
         String viewStateValue = null;
         boolean debug = false;
-
         try {
             for (String arg : args) {
                 // single parameter
@@ -39,6 +43,10 @@ public class ViewStateDecoder {
                     usage();
                     System.exit(0);
                 }
+                if ("-gui".equals(arg)) {
+                    mainGUI(args);
+                    return;
+                }
                 String[] param = arg.split("=", 2);
                 if (param.length < 2) {
                     // single parameter
@@ -50,7 +58,7 @@ public class ViewStateDecoder {
                     // multi parameter
                     if ("-vs".equals(param[0])) {
                         viewStateValue = param[1];
-                    }       
+                    }
                 }
             }
 
@@ -92,10 +100,11 @@ public class ViewStateDecoder {
         System.out.println("[option]");
         System.out.println("\t-h: output help.");
         System.out.println("\t-v: output version.");
+        System.out.println("\t-gui: stand alone GUI mode.");
         System.out.println("\t-d: output debug log.");
         System.out.println("[command]");
-        System.out.println("\t=-vs: viewstate string");
+        System.out.println("\t-vs=<viewState>: viewstate string");
         System.out.println("");
     }
- 
+
 }

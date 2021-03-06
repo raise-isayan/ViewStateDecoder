@@ -87,6 +87,12 @@ ViewState が URLEncode されている場合でも URLDecode 後に ViewState �
 java -jar ViewStateDecoder.jar -vs=%2FwEPDwUKLTM0MjUyMzM2OWRkmW75zyss5UROsLtrTEuOq7AGUDk%3D
 ```
 
+また、-gui オプションで Burp sute を必要としないスタンドアローンで起動できます。
+
+```
+java -jar ViewStateDecoder.jar -gui
+```
+
 ## ビルド
 
 ```
@@ -107,7 +113,7 @@ gradlew release
 
 ## 必須ライブラリ
 ビルドには別途 [BurpExtensionCommons](https://github.com/raise-isayan/BurpExtensionCommons) のライブラリを必要とします。
-* BurpExtensionCommons v0.4.0.0
+* BurpExtensionCommons v0.4.x
   * https://github.com/raise-isayan/BurpExtensionCommons
 
 ## 利用ライブラリ
