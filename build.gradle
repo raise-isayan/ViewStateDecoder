@@ -3,7 +3,7 @@ apply plugin: 'jacoco'
 apply plugin: 'application'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 sourceCompatibility = '11' // -source
@@ -71,7 +71,7 @@ dependencies {
     // https://github.com/raise-isayan/BurpExtlib
     implementation fileTree(dir: 'libs', include: ['*.jar'])
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
-        implementation 'com.google.code.gson:gson:2.8.6'
+        implementation 'com.google.code.gson:gson:2.8.7'
         // https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet
         implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
 

@@ -9,6 +9,7 @@ import burp.IMessageEditorTab;
 import burp.IMessageEditorTabFactory;
 import burp.IParameter;
 import burp.IRequestInfo;
+import extension.helpers.MatchUtil;
 import extension.helpers.StringUtil;
 import extension.helpers.SwingUtil;
 import extension.helpers.json.JsonUtil;
@@ -265,7 +266,7 @@ public class ViewStateTab extends javax.swing.JPanel implements IMessageEditorTa
         }
         try {
             this.clearViewState();
-            if (ViewStateParser.isUrlencoded(viewStateValue)) {
+            if (MatchUtil.containsUrlencoded(viewStateValue)) {
                 viewStateValue = URLDecoder.decode(viewStateValue, StandardCharsets.ISO_8859_1);
             }
             final ViewStateParser vs = new ViewStateParser();

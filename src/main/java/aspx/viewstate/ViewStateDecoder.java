@@ -1,5 +1,6 @@
 package aspx.viewstate;
 
+import extension.helpers.MatchUtil;
 import extension.helpers.json.JsonUtil;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -69,7 +70,7 @@ public class ViewStateDecoder {
                 return;
             }
             else {
-                if (ViewStateParser.isUrlencoded(viewStateValue)) {
+                if (MatchUtil.containsUrlencoded(viewStateValue)) {
                     viewStateValue = URLDecoder.decode(viewStateValue, StandardCharsets.ISO_8859_1);
                 }
                 ViewStateParser vs = new ViewStateParser();

@@ -581,11 +581,4 @@ if (DEBUG_MODE) System.out.println(ex.getMessage() + ":" + StringUtil.getStackTr
         return "Unknown";
     }
 
-    private final static Pattern PTN_URL = Pattern.compile("%([0-9a-fA-F]{2})");
-
-    public static boolean isUrlencoded(String value) {
-        Matcher m = PTN_URL.matcher(value);
-        return m.find();
-    }
-
 }

@@ -149,6 +149,7 @@ public class ViewStateParserTest {
                 fail();
             } catch (IllegalArgumentException ex) {
                 System.out.println(StringUtil.getStackTrace(ex));
+                assertTrue(true);
             }
         }
         System.out.println("Parser21");
@@ -162,6 +163,7 @@ public class ViewStateParserTest {
                 assertEquals(Algorithm.HMAC_UNKNOWN, vs.getMacAlgorithm());
             } catch (IllegalArgumentException ex) {
                 System.out.println(StringUtil.getStackTrace(ex));
+                fail();
             }
         }
 

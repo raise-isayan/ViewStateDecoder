@@ -100,7 +100,7 @@ public class ViewStateMainFrame extends javax.swing.JFrame {
             LookAndFeel newLAF = (LookAndFeel) (lnfClass.getDeclaredConstructor().newInstance());
             return newLAF.isSupportedLookAndFeel();
         } catch (Exception ex) {
-            logger.log(Level.WARNING, null, ex);
+            logger.log(Level.WARNING, ex.getMessage(), ex);
             return false;
         }
     }
@@ -125,7 +125,7 @@ public class ViewStateMainFrame extends javax.swing.JFrame {
             UIManager.setLookAndFeel(this.currentLookAndFeel.getClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception ex) {
-            logger.log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 
@@ -179,13 +179,13 @@ public class ViewStateMainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (InstantiationException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (IllegalAccessException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
         //</editor-fold>
 
