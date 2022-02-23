@@ -112,8 +112,8 @@ public class ViewStateParserTest {
             String result = rootJson.getAsJsonObject().get("Pair").getAsJsonArray().get(0).getAsJsonObject().get("Pair").getAsJsonArray().get(0).getAsJsonObject().get("string").getAsString();
             assertEquals("-342523369", result);
             assertEquals("996EF9CF2B2CE5444EB0BB6B4C4B8EABB0065039", vs.getDigest());
-            assertEquals(Algorithm.HMAC_SHA256, vs.getMacAlgorithm());
-            assertEquals(true, vs.isMacEnabled());
+            assertEquals(Algorithm.HMAC_UNKNOWN, vs.getMacAlgorithm());
+            assertEquals(false, vs.isMacEnabled());
         }
         System.out.println("Parser02");
         {
@@ -123,8 +123,8 @@ public class ViewStateParserTest {
             ViewState vs = instance.parse(viewState);
             System.out.println(JsonUtil.prettyJson(vs.toJson(), true));
             assertEquals("86C8C5FBADA05A785851C132B91C131F11835730", vs.getDigest());
-            assertEquals(Algorithm.HMAC_SHA256, vs.getMacAlgorithm());
-            assertEquals(true, vs.isMacEnabled());
+            assertEquals(Algorithm.HMAC_UNKNOWN, vs.getMacAlgorithm());
+            assertEquals(false, vs.isMacEnabled());
         }
         System.out.println("Parser03");
         {
