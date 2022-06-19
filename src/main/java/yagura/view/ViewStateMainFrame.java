@@ -42,6 +42,7 @@ public class ViewStateMainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 640));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         pnlMain.setPreferredSize(new java.awt.Dimension(800, 600));
         pnlMain.setLayout(new java.awt.BorderLayout());

@@ -108,12 +108,12 @@ gradlew release
 * v2020 or higher (http://www.portswigger.net/burp/)
 
 ## 開発環境
-* NetBean 12.2 (https://netbeans.apache.org/)
-* Gradle 6.8.1 (https://gradle.org/)
+* NetBean 13.0 (https://netbeans.apache.org/)
+* Gradle 7.0.2 (https://gradle.org/)
 
 ## 必須ライブラリ
 ビルドには別途 [BurpExtensionCommons](https://github.com/raise-isayan/BurpExtensionCommons) のライブラリを必要とします。
-* BurpExtensionCommons v0.4.x
+* BurpExtensionCommons v0.5.x
   * https://github.com/raise-isayan/BurpExtensionCommons
 
 ## 利用ライブラリ
