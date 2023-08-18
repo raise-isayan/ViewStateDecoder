@@ -6,8 +6,8 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = '11' // -source
-targetCompatibility = '11' // -target
+sourceCompatibility = '17' // -source
+targetCompatibility = '17' // -target
 
 mainClassName = 'aspx.viewstate.ViewStateDecoder'
 //mainClassName = 'yagura.view.ViewStateMainFrame'
@@ -64,18 +64,18 @@ task release(type: Zip, dependsOn: ['build']) {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/net.portswigger.burp.extender/burp-extender-api
-    //    stand alone mode で実行させるため含める
-    implementation 'net.portswigger.burp.extender:burp-extender-api:2.3'
-    // https://github.com/raise-isayan/BurpExtlib
+    // https://mvnrepository.com/artifact/net.portswigger.burp.extensions/montoya-api
+    implementation 'net.portswigger.burp.extensions:montoya-api:2023.8'
+
+    // https://github.com/raise-isayan/BurpExtensionCommons
     implementation fileTree(dir: 'libs', include: ['*.jar'])
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
-        implementation 'com.google.code.gson:gson:2.9.0'
-        // https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet
+        implementation 'com.google.code.gson:gson:2.10.1'
+        // https://mvnrepository.com/artifact/com.googlecode.juniversalchardet
         implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
 
     // UnitTest
     // https://mvnrepository.com/artifact/net.portswigger.burp.extender/burp-extender-api
-    testImplementation 'net.portswigger.burp.extender:burp-extender-api:2.3'
+    testImplementation 'net.portswigger.burp.extensions:montoya-api:2023.8'
     testImplementation 'junit:junit:4.13.2'
 }
