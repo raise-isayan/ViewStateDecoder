@@ -16,6 +16,22 @@ Burp suite の v2020.3 以降において、 ViewState 表示がされなくな�
 
 また既存の Burp suite の ViewState にあった一部の問題を修正しています。
 
+## 最新版について
+
+メインのリポジトリ(master)には開発中のコードが含まれている場合があります。
+安定したリリース版は､以下よりダウンロードしてください。
+
+* https://github.com/raise-isayan/ViewStateDecoder/releases
+
+利用するバージョンは以下のものをご利用ください
+
+* Burp suite v2023.1.2 より前のバージョン
+   * ViewStateDecoder v0.5.3.0 以前
+
+* Burp suite v2023.1.2 より後のバージョン
+   * ViewStateDecoder v3.0.0 以降
+   * ViewStateDecoder v0.5.3.0  以前(現時点で利用可)
+
 ## 利用方法
 
 Burp suite の Extenderは以下の手順で読み込めます。
@@ -102,18 +118,18 @@ gradlew release
 ## 実行環境
 
 .Java
-* JRE (JDK) 11 (Open JDK is recommended) (https://openjdk.java.net/)
+* JRE (JDK) 17 (Open JDK is recommended) (https://openjdk.java.net/)
 
 .Burp suite
-* v2020 or higher (http://www.portswigger.net/burp/)
+* v2023.1.2 or higher (http://www.portswigger.net/burp/)
 
 ## 開発環境
-* NetBean 13.0 (https://netbeans.apache.org/)
-* Gradle 7.0.2 (https://gradle.org/)
+* NetBean 18.0 (https://netbeans.apache.org/)
+* Gradle 7.5 (https://gradle.org/)
 
 ## 必須ライブラリ
 ビルドには別途 [BurpExtensionCommons](https://github.com/raise-isayan/BurpExtensionCommons) のライブラリを必要とします。
-* BurpExtensionCommons v0.5.x
+* BurpExtensionCommons v3.1.x
   * https://github.com/raise-isayan/BurpExtensionCommons
 
 ## 利用ライブラリ
@@ -122,8 +138,13 @@ gradlew release
   * Apache License 2.0
   * https://github.com/google/gson/blob/master/LICENSE
 
+* Universal Chardet for java (https://code.google.com/archive/p/juniversalchardet/)
+  * MPL 1.1
+  * https://code.google.com/archive/p/juniversalchardet/
+
+
 以下のバージョンで動作確認しています。
-* Burp suite v2020.12.1
+* Burp suite v2023.9.2
 
 ## 注意事項
 このツールは、私個人が勝手に開発したもので、PortSwigger社は一切関係ありません。本ツールを使用したことによる不具合等についてPortSwiggerに問い合わせないようお願いします。

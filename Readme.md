@@ -17,6 +17,22 @@ It is intended for use with Burp suite v2020.x or later.
 
 Fixed some issues with ViewState in the existing Burp suite.
 
+## About the latest version
+
+The main repository (master) may contain code under development.
+Please download the stable release version from the following.
+
+* https://github.com/raise-isayan/ViewStateDecoder/releases
+
+Please use the following versions
+
+* Burp suite v2023.1.2 or less than
+  * ViewStateDecoder v2.2.14.0 or less than
+
+* Burp suite v2023.1.2 or above
+  * ViewStateDecoder v3.0.0 or above 
+  * ViewStateDecoder v0.5.3.0 or less (currently available)
+
 ## How to Use
 
 The Burp Suite Extender can be loaded by following the steps below.
@@ -104,18 +120,18 @@ gradlew release
 ## Runtime environment
 
 .Java
-* JRE (JDK) 11 (Open JDK is recommended) (https://openjdk.java.net/)
+* JRE (JDK) 17 (Open JDK is recommended) (https://openjdk.java.net/)
 
 .Burp suite
-* v2020 or higher (http://www.portswigger.net/burp/)
+* v2023.1.2 or higher (http://www.portswigger.net/burp/)
 
 ## Development environment
-* NetBean 13.0 (https://netbeans.apache.org/)
-* Gradle 7.0.2 (https://gradle.org/)
+* NetBean 18.0 (https://netbeans.apache.org/)
+* Gradle 7.5 (https://gradle.org/)
 
 ## Required libraries
 Building requires a [BurpExtensionCommons](https://github.com/raise-isayan/BurpExtensionCommons) library.
-* BurpExtensionCommons v0.5.x
+* BurpExtensionCommons v3.1.x
   * https://github.com/raise-isayan/BurpExtensionCommons
 
 ## Use Library
@@ -124,8 +140,12 @@ Building requires a [BurpExtensionCommons](https://github.com/raise-isayan/BurpE
   * Apache License 2.0
   * https://github.com/google/gson/blob/master/LICENSE
 
+* Universal Chardet for java (https://code.google.com/archive/p/juniversalchardet/)
+  * MPL 1.1
+  * https://code.google.com/archive/p/juniversalchardet/
+
 Operation is confirmed with the following versions.
-* Burp suite v2020.12.1
+* Burp suite v2023.9.2
 
 ## important
 This tool developed by my own personal use, PortSwigger company is not related at all. Please do not ask PortSwigger about problems, etc. caused by using this tool.
