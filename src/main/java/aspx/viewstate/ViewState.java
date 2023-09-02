@@ -10,6 +10,7 @@ import extension.helpers.ConvertUtil;
  * @author isayan
  */
 public class ViewState {
+
     public static final ViewState ENCRYPTED_VIEW_STATE;
     public static final ViewState EXCEPTION_VIEW_STATE;
     public static final ViewState ILL_FORMAT_VIEW_STATE;
@@ -44,18 +45,17 @@ public class ViewState {
         }
     }
 
-    private final static String [] UNIT_TYPE = {
+    private final static String[] UNIT_TYPE = {
         "pixel", // 1
         "point", // 2
-        "pica",  // 3
-        "inch",  // 4
-        "mm",    // 5
-        "cm",    // 6
+        "pica", // 3
+        "inch", // 4
+        "mm", // 5
+        "cm", // 6
         "percentage", // 7
-        "em",	  // 8
-        "ex",	  // 9
+        "em", // 8
+        "ex", // 9
     };
-
 
     ViewState() {
         this.jsonRoot = JsonNull.INSTANCE;

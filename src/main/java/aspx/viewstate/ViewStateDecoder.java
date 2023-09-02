@@ -14,12 +14,13 @@ import static yagura.view.ViewStateMainFrame.mainGUI;
  * @author isayan
  */
 public class ViewStateDecoder {
+
     private final static Logger logger = Logger.getLogger(ViewStateDecoder.class.getName());
 
     private final static java.util.ResourceBundle RELEASE = java.util.ResourceBundle.getBundle("burp/resources/release");
 
     private static String getVersion() {
-       return RELEASE.getString("version");
+        return RELEASE.getString("version");
     }
 
     /**
@@ -54,8 +55,7 @@ public class ViewStateDecoder {
                     if ("-d".equals(arg)) {
                         debug = true;
                     }
-                }
-                else {
+                } else {
                     // multi parameter
                     if ("-vs".equals(param[0])) {
                         viewStateValue = param[1];
@@ -68,8 +68,7 @@ public class ViewStateDecoder {
                 System.out.println("-vs argument err ");
                 usage();
                 return;
-            }
-            else {
+            } else {
                 if (MatchUtil.containsUrlencoded(viewStateValue)) {
                     viewStateValue = URLDecoder.decode(viewStateValue, StandardCharsets.ISO_8859_1);
                 }
@@ -77,8 +76,7 @@ public class ViewStateDecoder {
                 final ViewState viewState = vs.parse(viewStateValue);
                 if (viewState.isEncrypted()) {
                     System.out.println("probably encrypted");
-                }
-                else {
+                } else {
                     if (viewState.isMacEnabled()) {
                         System.out.println("MAC: " + viewState.isMacEnabled());
                         System.out.println("digest: " + viewState.getDigest());

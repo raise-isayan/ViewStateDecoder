@@ -16,15 +16,18 @@ import java.util.logging.Logger;
 
 /**
  * Base Code
- * @see https://github.com/mono/mono/blob/master/mcs/class/referencesource/System.Web/UI/ObjectStateFormatter.cs
+ *
+ * @see
+ * https://github.com/mono/mono/blob/master/mcs/class/referencesource/System.Web/UI/ObjectStateFormatter.cs
  * @licenses MIT license
  */
 public class ViewStateParser {
+
     private final static Logger logger = Logger.getLogger(ViewStateParser.class.getName());
 
     private final static boolean DEBUG_MODE = false;
 
-    private Charset encoding =  StandardCharsets.UTF_8;
+    private Charset encoding = StandardCharsets.UTF_8;
 
     // Optimized type tokens
     private final static byte Token_Int16 = 0x01;
@@ -111,8 +114,7 @@ public class ViewStateParser {
                 ViewState viewState = new ViewState(jsonRoot);
                 return viewState;
             }
-        }
-        else {
+        } else {
             // Encrypted
             ViewState viewState = new ViewState();
             return viewState;
@@ -122,11 +124,15 @@ public class ViewStateParser {
     public JsonElement decodeJsonObject(ByteBuffer bbf) {
         JsonElement decodeNode = JsonNull.INSTANCE;
         byte token = bbf.get();
-if (DEBUG_MODE) System.out.println(String.format("Type:0x%02x", token));
+        if (DEBUG_MODE) {
+            System.out.println(String.format("Type:0x%02x", token));
+        }
         try {
             switch (token) {
                 case Token_Int16: { //?
-if (DEBUG_MODE) System.out.println("Token_Int16");
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Int16");
+                    }
                     short value = bbf.getShort();
                     JsonObject jsonNode = new JsonObject();
                     jsonNode.addProperty("Int16", value);
@@ -134,7 +140,9 @@ if (DEBUG_MODE) System.out.println("Token_Int16");
                     break;
                 }
                 case Token_Int32: { //?
-if (DEBUG_MODE) System.out.println("Token_Int32");
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Int32");
+                    }
                     int value = readEncodedInt32(bbf);
                     JsonObject jsonNode = new JsonObject();
                     jsonNode.addProperty("Int32", value);
@@ -149,11 +157,15 @@ if (DEBUG_MODE) System.out.println("Token_Int32");
                     break;
                 }
                 case Token_Char: { //??
-if (DEBUG_MODE) System.out.println("Token_Char");
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Char");
+                    }
                     // 2byteのケースが存在
                     //char value = bbf.getChar();
                     byte value = bbf.get();
-if (DEBUG_MODE) System.out.println(String.format("\tchar:%c, \\u%04x", value, (int)value));
+                    if (DEBUG_MODE) {
+                        System.out.println(String.format("\tchar:%c, \\u%04x", value, (int) value));
+                    }
                     JsonObject jsonNode = new JsonObject();
                     jsonNode.addProperty("char", value);
                     decodeNode = jsonNode;
@@ -161,7 +173,9 @@ if (DEBUG_MODE) System.out.println(String.format("\tchar:%c, \\u%04x", value, (i
                 }
                 case Token_String: { //?
                     String value = readString(bbf);
-if (DEBUG_MODE) System.out.println("string:" + value);
+                    if (DEBUG_MODE) {
+                        System.out.println("string:" + value);
+                    }
                     JsonObject jsonNode = new JsonObject();
                     jsonNode.addProperty("string", value);
                     decodeNode = jsonNode;
@@ -169,10 +183,12 @@ if (DEBUG_MODE) System.out.println("string:" + value);
                 }
                 case Token_DateTime: { //?
                     long date_binary = bbf.getLong();
-if (DEBUG_MODE) System.out.println("DateTime:" + date_binary);
+                    if (DEBUG_MODE) {
+                        System.out.println("DateTime:" + date_binary);
+                    }
 //                    LocalDateTime value = LocalDateTime.ofInstant(Instant.ofEpochSecond(date_binary), ZoneOffset.UTC);
                     JsonObject jsonNode = new JsonObject();
-                    jsonNode.addProperty("DateTime",  date_binary);
+                    jsonNode.addProperty("DateTime", date_binary);
 //                    jsonNode.addProperty("DateTime",  DateTimeFormatter.RFC_1123_DATE_TIME.format(value));
                     decodeNode = jsonNode;
                     break;
@@ -223,7 +239,9 @@ if (DEBUG_MODE) System.out.println("DateTime:" + date_binary);
                     break;
                 }
                 case Token_Pair: { //?
-if (DEBUG_MODE) System.out.println("Token_Pair");
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Pair");
+                    }
                     JsonElement jsonNode = JsonNull.INSTANCE;
                     if (detail) {
                         JsonObject jsonPairObject = new JsonObject();
@@ -251,7 +269,9 @@ if (DEBUG_MODE) System.out.println("Token_Pair");
                     break;
                 }
                 case Token_Triplet: { //?
-if (DEBUG_MODE) System.out.println("Token_Triplet");
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Triplet");
+                    }
                     JsonElement jsonNode = JsonNull.INSTANCE;
                     if (detail) {
                         JsonObject jsonTripletObject = new JsonObject();
@@ -288,8 +308,12 @@ if (DEBUG_MODE) System.out.println("Token_Triplet");
                 case Token_Array: {
                     String enumType = readTypeIdent(bbf);
                     int count = readEncodedInt32(bbf);
-if (DEBUG_MODE) System.out.println("Token_Array.type:" + enumType);
-if (DEBUG_MODE) System.out.println("Token_Array.count:" + count);
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Array.type:" + enumType);
+                    }
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Array.count:" + count);
+                    }
                     JsonArray jsonArray = new JsonArray();
                     for (int i = 0; i < count; i++) {
                         jsonArray.add(decodeJsonObject(bbf));
@@ -301,7 +325,9 @@ if (DEBUG_MODE) System.out.println("Token_Array.count:" + count);
                 }
                 case Token_StringArray: {
                     int count = readEncodedInt32(bbf);
-if (DEBUG_MODE) System.out.println("Token_StringArray.count:" + count);
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_StringArray.count:" + count);
+                    }
                     JsonArray jsonArray = new JsonArray();
                     String[] array = new String[count];
                     for (int i = 0; i < count; i++) {
@@ -314,7 +340,9 @@ if (DEBUG_MODE) System.out.println("Token_StringArray.count:" + count);
                 }
                 case Token_ArrayList: { //?
                     int count = readEncodedInt32(bbf);
-if (DEBUG_MODE) System.out.println("Token_ArrayList.count:" + count);
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_ArrayList.count:" + count);
+                    }
                     JsonArray jsonArray = new JsonArray();
                     for (int i = 0; i < count; i++) {
                         jsonArray.add(decodeJsonObject(bbf));
@@ -327,7 +355,9 @@ if (DEBUG_MODE) System.out.println("Token_ArrayList.count:" + count);
                 case Token_Hashtable:
                 case Token_HybridDictionary: {
                     int count = readEncodedInt32(bbf);
-if (DEBUG_MODE) System.out.println("Token_Hashtable.count:" + count);
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Hashtable.count:" + count);
+                    }
                     JsonArray jsonArray = new JsonArray();
                     for (int i = 0; i < count; i++) {
                         JsonObject jsonMap = new JsonObject();
@@ -348,7 +378,9 @@ if (DEBUG_MODE) System.out.println("Token_Hashtable.count:" + count);
                     break;
                 }
                 case Token_Unit: {
-if (DEBUG_MODE) System.out.println("Token_Unit");
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_Unit");
+                    }
                     JsonObject jsonUnit = new JsonObject();
                     int b = bbf.remaining();
                     double value = bbf.getDouble();
@@ -366,7 +398,7 @@ if (DEBUG_MODE) System.out.println("Token_Unit");
                 }
                 case Token_EventValidationStore: {
                     byte versionHeader = bbf.get();
-                     if (versionHeader != 0) {
+                    if (versionHeader != 0) {
                         throw new IllegalArgumentException("Invalid Serialized Data");
                     }
                     JsonArray jsonEvent = new JsonArray();
@@ -376,8 +408,7 @@ if (DEBUG_MODE) System.out.println("Token_Unit");
                         if (bbf.remaining() >= HASH_SIZE_IN_BYTES) {
                             bbf.get(entry);
                             jsonEvent.add(ConvertUtil.toHexString(entry));
-                        }
-                        else { // EOF
+                        } else { // EOF
                             throw new IllegalArgumentException("Invalid Serialized Data");
                         }
                     }
@@ -389,7 +420,9 @@ if (DEBUG_MODE) System.out.println("Token_Unit");
                 case Token_IndexedStringAdd: //
                 case Token_IndexedString: {  //?
                     String value = readIndexedString(bbf, token);
-if (DEBUG_MODE) System.out.println("\tindexString:" + value);
+                    if (DEBUG_MODE) {
+                        System.out.println("\tindexString:" + value);
+                    }
                     JsonObject jsonNode = new JsonObject();
                     jsonNode.addProperty("IndexedString", value);
                     decodeNode = jsonNode;
@@ -408,7 +441,9 @@ if (DEBUG_MODE) System.out.println("\tindexString:" + value);
                 }
                 case Token_BinarySerialized: { //?
                     int count = readEncodedInt32(bbf);
-if (DEBUG_MODE) System.out.println("Token_BinarySerialized.count:" + count);
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_BinarySerialized.count:" + count);
+                    }
                     byte[] array = new byte[count];
                     bbf.get(array);
                     JsonObject jsonNode = new JsonObject();
@@ -423,9 +458,15 @@ if (DEBUG_MODE) System.out.println("Token_BinarySerialized.count:" + count);
                     if (itemCount > count) {
                         throw new IllegalArgumentException("Invalid Serialized Data");
                     }
-if (DEBUG_MODE) System.out.println("Token_SparseArray.type:" + elementType);
-if (DEBUG_MODE) System.out.println("Token_SparseArray.count:" + count);
-if (DEBUG_MODE) System.out.println("Token_SparseArray.itemCount:" + itemCount);
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_SparseArray.type:" + elementType);
+                    }
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_SparseArray.count:" + count);
+                    }
+                    if (DEBUG_MODE) {
+                        System.out.println("Token_SparseArray.itemCount:" + itemCount);
+                    }
                     ArrayList<JsonElement> list = new ArrayList<>();
                     for (int i = 0; i < count; i++) {
                         list.add(JsonNull.INSTANCE);
@@ -476,7 +517,9 @@ if (DEBUG_MODE) System.out.println("Token_SparseArray.itemCount:" + itemCount);
                     break;
                 }
                 default: {
-if (DEBUG_MODE) System.out.println("Mismatch token:" + String.format("0x%02x len=%d", token, bbf.remaining()));
+                    if (DEBUG_MODE) {
+                        System.out.println("Mismatch token:" + String.format("0x%02x len=%d", token, bbf.remaining()));
+                    }
                     JsonObject jsonNode = new JsonObject();
                     jsonNode.addProperty("Unknown token", String.format("0x%02x", token));
                     decodeNode = jsonNode;
@@ -485,7 +528,9 @@ if (DEBUG_MODE) System.out.println("Mismatch token:" + String.format("0x%02x len
             }
             return decodeNode;
         } catch (RuntimeException ex) {
-if (DEBUG_MODE) System.out.println(ex.getMessage() + ":" + StringUtil.getStackTrace(ex));
+            if (DEBUG_MODE) {
+                System.out.println(ex.getMessage() + ":" + StringUtil.getStackTrace(ex));
+            }
         }
         return decodeNode;
     }

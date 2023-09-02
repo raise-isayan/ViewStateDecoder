@@ -75,7 +75,12 @@ dependencies {
         implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
 
     // UnitTest
+
     // https://mvnrepository.com/artifact/net.portswigger.burp.extender/burp-extender-api
     testImplementation 'net.portswigger.burp.extensions:montoya-api:2023.8'
-    testImplementation 'junit:junit:4.13.2'
+
+    // Use JUnit Jupiter for testing.
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
 }
