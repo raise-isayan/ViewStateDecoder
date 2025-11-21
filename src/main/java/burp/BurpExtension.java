@@ -35,6 +35,7 @@ public class BurpExtension extends BurpExtensionImpl {
     @Override
     public void initialize(MontoyaApi api) {
         super.initialize(api);
+        api().extension().setName(BUNDLE.getString("projname"));
         api.userInterface().registerHttpRequestEditorProvider(this.requestViewStateTab);
         api.userInterface().registerSuiteTab(this.viewStateDecoderTab.getTabCaption(), this.viewStateDecoderTab);
 

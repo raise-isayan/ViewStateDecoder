@@ -115,7 +115,7 @@ public class ViewState {
     private final byte[] digest;
 
     public String getDigest() {
-        return ConvertUtil.toHexString(this.digest);
+        return ConvertUtil.toHexString(this.digest, true);
     }
 
 }

@@ -407,7 +407,7 @@ public class ViewStateParser {
                         byte[] entry = new byte[HASH_SIZE_IN_BYTES];
                         if (bbf.remaining() >= HASH_SIZE_IN_BYTES) {
                             bbf.get(entry);
-                            jsonEvent.add(ConvertUtil.toHexString(entry));
+                            jsonEvent.add(ConvertUtil.toHexString(entry, true));
                         } else { // EOF
                             throw new IllegalArgumentException("Invalid Serialized Data");
                         }
