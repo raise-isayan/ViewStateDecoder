@@ -78,7 +78,7 @@ task release(type: Zip, dependsOn: ['build']) {
 
 dependencies {
     // https://mvnrepository.com/artifact/net.portswigger.burp.extensions/montoya-api
-    implementation 'net.portswigger.burp.extensions:montoya-api:2025.10'
+    implementation 'net.portswigger.burp.extensions:montoya-api:2026.2'
 
     // https://github.com/raise-isayan/BurpExtensionCommons
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -86,7 +86,7 @@ dependencies {
     // UnitTest
 
     // https://mvnrepository.com/artifact/net.portswigger.burp.extensions/montoya-api
-    testImplementation 'net.portswigger.burp.extensions:montoya-api:2025.10'
+    testImplementation 'net.portswigger.burp.extensions:montoya-api:2026.2'
 
     // Use JUnit Jupiter for testing.
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
