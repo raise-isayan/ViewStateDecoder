@@ -33,12 +33,6 @@ application {
     mainClass = 'aspx.viewstate.ViewStateDecoder'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
 //jar {
 //    // Keep jar clean:
 //    exclude 'META-INF/**', 'about.html', 'module-info.class'
@@ -78,7 +72,7 @@ task release(type: Zip, dependsOn: ['build']) {
 
 dependencies {
     // https://mvnrepository.com/artifact/net.portswigger.burp.extensions/montoya-api
-    implementation 'net.portswigger.burp.extensions:montoya-api:2026.2'
+    implementation 'net.portswigger.burp.extensions:montoya-api:2026.4'
 
     // https://github.com/raise-isayan/BurpExtensionCommons
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -86,11 +80,27 @@ dependencies {
     // UnitTest
 
     // https://mvnrepository.com/artifact/net.portswigger.burp.extensions/montoya-api
-    testImplementation 'net.portswigger.burp.extensions:montoya-api:2026.2'
+    testImplementation 'net.portswigger.burp.extensions:montoya-api:2026.4'
 
     // Use JUnit Jupiter for testing.
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
     //testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.release = 17
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
 }

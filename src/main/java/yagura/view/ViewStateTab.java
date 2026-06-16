@@ -11,7 +11,6 @@ import burp.api.montoya.http.message.HttpRequestResponse;
 import burp.api.montoya.http.message.requests.HttpRequest;
 import burp.api.montoya.ui.editor.extension.EditorCreationContext;
 import burp.api.montoya.ui.editor.extension.EditorMode;
-import burp.api.montoya.ui.editor.extension.ExtensionProvidedEditor;
 import extension.burp.ExtensionHelper;
 import extension.burp.IBurpMessageTab;
 import extension.helpers.MatchUtil;
@@ -146,6 +145,7 @@ public class ViewStateTab extends javax.swing.JPanel implements IBurpMessageTab 
         txtJSON.setEditable(false);
         txtJSON.setColumns(20);
         txtJSON.setRows(5);
+        txtJSON.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         scrollJSON.setViewportView(txtJSON);
 
         tabViewStateView.addTab("Raw JSON", scrollJSON);
@@ -356,8 +356,7 @@ public class ViewStateTab extends javax.swing.JPanel implements IBurpMessageTab 
                 }
             }
             return false;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             return false;
         }

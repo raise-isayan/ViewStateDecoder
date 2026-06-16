@@ -42,6 +42,7 @@ public class ViewStateDecoderTab extends javax.swing.JPanel implements IBurpTab 
         txtViewState.setColumns(20);
         txtViewState.setLineWrap(true);
         txtViewState.setRows(5);
+        txtViewState.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane1.setViewportView(txtViewState);
 
         btnDecode.setText("Decode");
